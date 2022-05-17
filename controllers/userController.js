@@ -20,7 +20,7 @@ const createUser = async (req,res)=>{
 
 const getSingleUser = async (req,res)=>{
     try{
-        const user = await User.findById(req.params.userId).populate("friends");
+        const user = await User.findById(req.params.userId).populate("friends").populate("thoughts");
         res.status(200).json(user)
     }catch(err){
         res.status(500).json(err)

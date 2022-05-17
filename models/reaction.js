@@ -30,7 +30,7 @@ const reactionsSchema = new Schema(
   }
 );
 
-reactionSchema.virtual("getDate").get(function(){
+reactionsSchema.virtual("getDate").get(function(){
     return this.createdAt.toDateString;
 })
 
