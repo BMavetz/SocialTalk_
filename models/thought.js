@@ -3,30 +3,40 @@ const reactionsSchema = require('./reaction');
 
 // Schema to create thought model
 const thoughtSchema = new Schema(
-  {
-    first: {
-      type: String,
-      required: true,
-      max_length: 50,
+    {
+        thoughtText:{
+            type:String,
+            required:true,
+            maxlength:280,
+            minlength:1
+        },
+        createdAt:{
+            type:Date,
+            default: new Date(),
+            
+        },
+        username:{
+            type:String,
+        required:true
+        },
+        reactions:[reactionsSchema]
     },
-    last: {
-      type: String,
-      required: true,
-      max_length: 50,
-    },
-    github: {
-      type: String,
-      required: true,
-      max_length: 50,
-    },
-    reactions: [reactionsSchema],
-  },
-  {
-    toJSON: {
-      getters: true,
-    },
-  }
-);
+    {
+        toJSON:{
+            virtuals:true
+        },
+        id:false
+    }
+)
+
+thoughtSchema.virtual("getDate").get(function(){
+    return this.createdAt.toDateString;
+})
+
+thoughtSchema.virtual("numReactions").get(function(){
+    return this.reactions.length
+})
+
 
 const Thought = model('thought', thoughtSchema);
 
